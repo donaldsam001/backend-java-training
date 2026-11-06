@@ -1,0 +1,102 @@
+flowchart TB
+    USER["Store Employee / Admin"]
+
+    subgraph PRESENTATION["Presentation Layer"]
+        MAIN["Main Application"]
+        MENU["Console Menu"]
+        CONTROLLER["Controllers"]
+    end
+
+    subgraph SERVICE["Service Layer - Business Logic"]
+        PS["ProductService"]
+        CS["CustomerService"]
+        ES["EmployeeService"]
+        IS["InventoryService"]
+        OS["OrderService"]
+        PAY["PaymentService"]
+        DS["DiscountService"]
+        RS["ReportService"]
+    end
+
+    subgraph INTERFACE["Interfaces"]
+        PAYABLE["Payable"]
+        DISCOUNTABLE["Discountable"]
+        SEARCHABLE["Searchable"]
+    end
+
+    subgraph REPOSITORY["Repository Layer"]
+        PR["ProductRepository"]
+        CR["CustomerRepository"]
+        ER["EmployeeRepository"]
+        IR["InventoryRepository"]
+        OR["OrderRepository"]
+        PAR["PaymentRepository"]
+        DR["DiscountRepository"]
+    end
+
+    subgraph STORAGE["Data Storage - Java Core"]
+        PRODUCT_MAP["HashMap Product"]
+        CUSTOMER_MAP["HashMap Customer"]
+        EMPLOYEE_MAP["HashMap Employee"]
+        ORDER_MAP["HashMap Order"]
+        PAYMENT_MAP["HashMap Payment"]
+        FILE["File Storage"]
+    end
+
+    subgraph SUPPORT["Supporting Components"]
+        EX["Custom Exceptions"]
+        ENUM["Enums"]
+        UTIL["Utilities"]
+    end
+
+    USER --> MAIN
+    MAIN --> MENU
+    MENU --> CONTROLLER
+
+    CONTROLLER --> PS
+    CONTROLLER --> CS
+    CONTROLLER --> ES
+    CONTROLLER --> IS
+    CONTROLLER --> OS
+    CONTROLLER --> PAY
+    CONTROLLER --> DS
+    CONTROLLER --> RS
+
+    OS --> PS
+    OS --> IS
+    OS --> PAY
+    OS --> DS
+
+    PS --> PR
+    CS --> CR
+    ES --> ER
+    IS --> IR
+    OS --> OR
+    PAY --> PAR
+    DS --> DR
+
+    PAY --> PAYABLE
+    DS --> DISCOUNTABLE
+    PS --> SEARCHABLE
+
+    PR --> PRODUCT_MAP
+    CR --> CUSTOMER_MAP
+    ER --> EMPLOYEE_MAP
+    OR --> ORDER_MAP
+    PAR --> PAYMENT_MAP
+
+    PRODUCT_MAP --> FILE
+    CUSTOMER_MAP --> FILE
+    ORDER_MAP --> FILE
+    PAYMENT_MAP --> FILE
+
+    PS -.-> EX
+    IS -.-> EX
+    OS -.-> EX
+    PAY -.-> EX
+
+    PS -.-> ENUM
+    OS -.-> ENUM
+    PAY -.-> ENUM
+
+    CONTROLLER -.-> UTIL

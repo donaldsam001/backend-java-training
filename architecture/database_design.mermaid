@@ -1,0 +1,110 @@
+erDiagram
+
+    CATEGORY ||--o{ PRODUCT : contains
+
+    PRODUCT ||--|| INVENTORY : has
+
+    CUSTOMER ||--o{ ORDERS : places
+
+    EMPLOYEE ||--o{ ORDERS : processes
+
+    ORDERS ||--|{ ORDER_DETAIL : contains
+
+    PRODUCT ||--o{ ORDER_DETAIL : included_in
+
+    ORDERS ||--o{ PAYMENT : has
+
+    ORDERS ||--o| ORDER_DISCOUNT : receives
+
+    DISCOUNT ||--o{ ORDER_DISCOUNT : applied_to
+
+    CATEGORY {
+        long category_id PK
+        string category_name
+        string description
+        boolean active
+    }
+
+    PRODUCT {
+        long product_id PK
+        long category_id FK
+        string product_name
+        string description
+        decimal price
+        string status
+        datetime created_at
+        datetime updated_at
+    }
+
+    INVENTORY {
+        long inventory_id PK
+        long product_id FK
+        int quantity
+        int min_stock_level
+        datetime updated_at
+    }
+
+    CUSTOMER {
+        long customer_id PK
+        string full_name
+        string phone
+        string email
+        int loyalty_points
+        datetime created_at
+    }
+
+    EMPLOYEE {
+        long employee_id PK
+        string full_name
+        string phone
+        string email
+        decimal salary
+        string position
+    }
+
+    ORDERS {
+        long order_id PK
+        long customer_id FK
+        long employee_id FK
+        decimal total_amount
+        decimal discount_amount
+        decimal final_amount
+        string order_status
+        datetime order_date
+    }
+
+    ORDER_DETAIL {
+        long order_detail_id PK
+        long order_id FK
+        long product_id FK
+        int quantity
+        decimal unit_price
+        decimal subtotal
+    }
+
+    PAYMENT {
+        long payment_id PK
+        long order_id FK
+        string payment_method
+        decimal amount
+        string payment_status
+        datetime payment_date
+        string transaction_reference
+    }
+
+    DISCOUNT {
+        long discount_id PK
+        string discount_code
+        string discount_type
+        decimal discount_value
+        decimal min_order_amount
+        datetime start_date
+        datetime end_date
+        boolean active
+    }
+
+    ORDER_DISCOUNT {
+        long order_id PK, FK
+        long discount_id PK, FK
+        decimal applied_amount
+    }
