@@ -40,3 +40,4 @@ build/
 # Configuration files
 application-secret.properties
 application-prod.properties
+application.yml
