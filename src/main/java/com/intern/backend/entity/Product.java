@@ -1,11 +1,8 @@
 package com.intern.backend.entity;
 
-import com.intern.backend.enums.ProductStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.Builder;
-
 import java.time.LocalDateTime;
+
+import com.intern.backend.enums.ProductStatus;
 
 // import lombok.experimental.FieldDefaults;
 
@@ -13,7 +10,7 @@ import java.time.LocalDateTime;
 //@Builder
 //@Entity
 public class Product {
-//    @Id
+    // @Id
     private long id;
     private Category category;
     private String name;
@@ -25,13 +22,13 @@ public class Product {
 
     public Product(
             long id,
-//            Category category,
+            // Category category,
             String name,
             StringBuilder description,
             double price,
             ProductStatus status) {
         this.id = id;
-//        this.category = category;
+        // this.category = category;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -45,7 +42,7 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void display(){
+    public void display() {
         System.out.println(id);
         System.out.println(name);
         System.out.println(description);

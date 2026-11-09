@@ -20,4 +20,12 @@ public class Inventory {
     public int getQuantity(long id) {
         return quantity;
     }
+
+    public int getQuantity(Product product) {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
