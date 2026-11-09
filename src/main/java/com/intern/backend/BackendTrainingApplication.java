@@ -1,8 +1,10 @@
 package com.intern.backend;
 
 import com.intern.backend.entity.Category;
+import com.intern.backend.entity.Inventory;
 import com.intern.backend.entity.Order;
 import com.intern.backend.entity.Product;
+import com.intern.backend.exception.InsufficientStockException;
 import com.intern.backend.repository.Payable;
 import com.intern.backend.service.BankPayment;
 import com.intern.backend.service.CashPayment;
@@ -13,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class BackendTrainingApplication {
 		List<Payable> paymentMethods = new ArrayList<>();
 		paymentMethods.add(new CashPayment());
 		paymentMethods.add(new BankPayment());
-		for (Payable payment: paymentMethods){
+		for (Payable payment : paymentMethods) {
 			payment.pay(500);
 		}
 
@@ -44,7 +47,7 @@ public class BackendTrainingApplication {
 		StringBuilder description = new StringBuilder();
 		description.append("An apple");
 		description.append("\nFrom: VietNam");
-		Product product = new Product(100001, "Apple", description, 99, AVAILABLE );
+		Product product = new Product(100001, "Apple", description, 99, AVAILABLE);
 		inner.setProductName(product);
 		inner.setQuantity(4);
 		inner.display();
@@ -59,15 +62,30 @@ public class BackendTrainingApplication {
 //        }
 
 
-		try (BufferedWriter writer =
-					 new BufferedWriter(
-							 new FileWriter("products.txt"))) {
+//		try (BufferedWriter writer =
+//					 new BufferedWriter(
+//							 new FileWriter("products.txt"))) {
+//
+//			writer.write("P001,Laptop,15000000");
+//
+//		} catch (IOException e) {
+//			System.out.println(e.getMessage());
+//		}
 
-			writer.write("P001,Laptop,15000000");
-
-		} catch (IOException e) {
+		// ========================================================================//
+		// Inventory Service
+		InventoryService inventoryService = new InventoryService();
+		Inventory inventory = new Inventory(10001, product, 10, 5, LocalDateTime.now());
+		inventoryService.addInventory(inventory);
+		try {
+			inventoryService.reduceStock(product, 6);
+//			inventoryService.increaseStock(product, 20);
+		} catch (InsufficientStockException e) {
 			System.out.println(e.getMessage());
 		}
+
+		inventoryService.findProductsWithLowStock();
+		inventoryService.getList();
 	}
 
 }
