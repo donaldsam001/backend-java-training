@@ -1,16 +1,23 @@
 package com.intern.backend.entity;
 
 import com.intern.backend.enums.ProductStatus;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.Builder;
+
 import java.time.LocalDateTime;
 
 // import lombok.experimental.FieldDefaults;
 
 // @FieldDefaults(level = AccessLevel.PRIVATE)
+//@Builder
+//@Entity
 public class Product {
+//    @Id
     private long id;
     private Category category;
     private String name;
-    private String description;
+    private StringBuilder description;
     private double price;
     private ProductStatus status;
     private LocalDateTime createdAt;
@@ -18,13 +25,13 @@ public class Product {
 
     public Product(
             long id,
-            Category category,
+//            Category category,
             String name,
-            String description,
+            StringBuilder description,
             double price,
             ProductStatus status) {
         this.id = id;
-        this.category = category;
+//        this.category = category;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -36,6 +43,13 @@ public class Product {
     public void updatePrice(double price) {
         this.price = price;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void display(){
+        System.out.println(id);
+        System.out.println(name);
+        System.out.println(description);
+        System.out.println(status);
     }
 
     // Getters and Setters
