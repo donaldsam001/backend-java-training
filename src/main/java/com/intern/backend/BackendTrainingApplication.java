@@ -6,9 +6,13 @@ import com.intern.backend.entity.Product;
 import com.intern.backend.repository.Payable;
 import com.intern.backend.service.BankPayment;
 import com.intern.backend.service.CashPayment;
+import com.intern.backend.service.InventoryService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +48,26 @@ public class BackendTrainingApplication {
 		inner.setProductName(product);
 		inner.setQuantity(4);
 		inner.display();
+
+		// ========================================================================//
+		// Exception
+//		InventoryService inventoryService = new InventoryService();
+//		try{
+//			inventoryService.reduceStock(product, 20);
+//		} catch (RuntimeException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+		try (BufferedWriter writer =
+					 new BufferedWriter(
+							 new FileWriter("products.txt"))) {
+
+			writer.write("P001,Laptop,15000000");
+
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 }
